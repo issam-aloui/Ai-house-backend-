@@ -517,5 +517,3 @@ MIT License - See [LICENSE](LICENSE) for details
 ---
 
 **Made with ❤️ by CSCClub Development Team**
-#   A i - h o u s e - b a c k e n d -  
- 
