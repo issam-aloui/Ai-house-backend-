@@ -166,23 +166,64 @@ Use format: `<type>: <description>`
 
 ### Project Tasks Assignment
 
-| Feature Area | Assigned To | Status |
-|--------------|-------------|--------|
-| Events API | TBD | 🔵 Not Started |
-| Statistics API | TBD | 🔵 Not Started |
-| Team Members API | TBD | 🔵 Not Started |
-| Testimonials API | TBD | 🔵 Not Started |
-| Contact/Inquiries | TBD | 🔵 Not Started |
-| Admin Auth | TBD | 🔵 Not Started |
-| Database Setup | TBD | 🔵 Not Started |
-| Testing | TBD | 🔵 Not Started |
-| Documentation | TBD | 🔵 Not Started |
+**Backend Completion Deadline: March 25, 2026**
 
-**Status Legend:**
-- 🔵 Not Started
-- 🟡 In Progress
-- 🟢 Completed
-- 🔴 Blocked
+| Task | Assigned To | Description | Deadline | Status |
+|------|-------------|-------------|----------|--------|
+| **Events API & Media Upload** | Hocine | Complete events CRUD, add multer for image uploads, media gallery endpoints | March 22 | 🔵 Not Started |
+| **Statistics & Dashboard** | Walid | Statistics API completion, admin dashboard stats aggregation, charts data | March 22 | 🔵 Not Started |
+| **Team, Testimonials & Contact** | Issam Eddine | Team members API, testimonials with approval workflow, contact inquiry system | March 22 | 🔵 Not Started |
+| **Testing & Documentation** | All | Unit tests, API documentation, integration tests | March 25 | 🔵 Not Started |
+| **Final Integration** | All | Merge all branches, final testing, bug fixes | March 25 | 🔵 Not Started |
+
+---
+
+#### Hocine - Events & Media Module
+- [ ] Fix any issues in `eventController.js`
+- [ ] Add image upload with multer (events images)
+- [ ] Create media upload endpoints (`POST /api/v1/events/:id/media`)
+- [ ] Add file validation (images only, max 5MB)
+- [ ] Serve static files from `/uploads`
+- [ ] Test all event endpoints
+- [ ] **Deadline: March 22, 2026**
+
+#### Walid - Statistics & Analytics Module
+- [ ] Complete `statisticController.js` endpoints
+- [ ] Add admin dashboard aggregation endpoint:
+  - Total events count
+  - Upcoming events count
+  - New inquiries count
+  - Pending testimonials count
+- [ ] Create dashboard stats route (`GET /api/v1/admin/dashboard`)
+- [ ] Test statistics endpoints
+- [ ] **Deadline: March 22, 2026**
+
+#### Issam Eddine - Team, Testimonials & Contact Module
+- [ ] Verify `teamController.js` endpoints work correctly
+- [ ] Complete testimonial approval workflow
+- [ ] Add email notification for new inquiries
+- [ ] Test contact form submission
+- [ ] Test testimonial submission and approval
+- [ ] **Deadline: March 22, 2026**
+
+---
+
+### Daily Check-ins
+
+**Standup Time:** 9:00 PM daily
+
+**Format:**
+1. What did you complete today?
+2. What are you working on tomorrow?
+3. Any blockers?
+
+### Work Distribution Rules
+
+- Each member works on their assigned module in a separate branch
+- Branch naming: `feature/hocine-events`, `feature/walid-stats`, `feature/issam-contact`
+- Create PR to `develop` branch when module is complete
+- All PRs must be reviewed by at least 1 other member
+- Merge only after approval and tests passing
 
 ### Communication
 
