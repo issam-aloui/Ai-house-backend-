@@ -50,8 +50,13 @@ describe("Team API Integration", () => {
         };
       }
 
-      if (normalized.startsWith("SELECT * FROM team_members WHERE is_active = $1")) {
-        return { rows: teamMembers.filter((m) => m.is_active === params[0]), rowCount: 1 };
+      if (
+        normalized.startsWith("SELECT * FROM team_members WHERE is_active = $1")
+      ) {
+        return {
+          rows: teamMembers.filter((m) => m.is_active === params[0]),
+          rowCount: 1,
+        };
       }
 
       if (normalized.startsWith("SELECT * FROM team_members WHERE id = $1")) {

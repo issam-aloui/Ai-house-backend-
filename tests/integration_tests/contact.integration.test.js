@@ -80,7 +80,9 @@ describe("Contact API Integration", () => {
         return { rows: [...inquiries], rowCount: inquiries.length };
       }
 
-      if (normalized.startsWith("SELECT * FROM contact_inquiries WHERE id = $1")) {
+      if (
+        normalized.startsWith("SELECT * FROM contact_inquiries WHERE id = $1")
+      ) {
         const found = inquiries.find((i) => i.id === Number(params[0]));
         return { rows: found ? [found] : [], rowCount: found ? 1 : 0 };
       }
@@ -93,7 +95,9 @@ describe("Contact API Integration", () => {
         return { rows: [found], rowCount: 1 };
       }
 
-      if (normalized.startsWith("DELETE FROM contact_inquiries WHERE id = $1")) {
+      if (
+        normalized.startsWith("DELETE FROM contact_inquiries WHERE id = $1")
+      ) {
         const id = Number(params[0]);
         const index = inquiries.findIndex((i) => i.id === id);
         if (index === -1) return { rows: [], rowCount: 0 };
@@ -106,9 +110,13 @@ describe("Contact API Integration", () => {
           rows: [
             {
               total: String(inquiries.length),
-              new_count: String(inquiries.filter((i) => i.status === "new").length),
+              new_count: String(
+                inquiries.filter((i) => i.status === "new").length,
+              ),
               in_progress_count: "0",
-              resolved_count: String(inquiries.filter((i) => i.status === "resolved").length),
+              resolved_count: String(
+                inquiries.filter((i) => i.status === "resolved").length,
+              ),
             },
           ],
           rowCount: 1,
