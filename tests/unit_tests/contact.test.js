@@ -1,11 +1,11 @@
 const request = require('supertest');
-const app = require('../src/app');
-const ContactInquiry = require('../src/models/ContactInquiry');
+const app = require('../../src/app');
+const ContactInquiry = require('../../src/models/ContactInquiry');
 const nodemailer = require('nodemailer');
 
-jest.mock('../src/models/ContactInquiry');
+jest.mock('../../src/models/ContactInquiry');
 jest.mock('nodemailer');
-jest.mock('../src/middleware/auth', () => ({
+jest.mock('../../src/middleware/auth', () => ({
   authenticate: (req, res, next) => {
     req.admin = { id: 1, role: 'super_admin' };
     next();

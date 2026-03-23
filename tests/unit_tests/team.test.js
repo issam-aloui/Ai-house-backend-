@@ -1,13 +1,12 @@
 const request = require('supertest');
-const app = require('../src/app');
-const TeamMember = require('../src/models/TeamMember');
-const { authenticate } = require('../src/middleware/auth');
+const app = require('../../src/app');
+const TeamMember = require('../../src/models/TeamMember');
 
 // Mock the TeamMember model
-jest.mock('../src/models/TeamMember');
+jest.mock('../../src/models/TeamMember');
 
 // Mock the authentication middleware
-jest.mock('../src/middleware/auth', () => ({
+jest.mock('../../src/middleware/auth', () => ({
   authenticate: (req, res, next) => {
     req.admin = { id: 1, role: 'super_admin' };
     next();

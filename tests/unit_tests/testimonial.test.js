@@ -1,9 +1,9 @@
 const request = require('supertest');
-const app = require('../src/app');
-const Testimonial = require('../src/models/Testimonial');
+const app = require('../../src/app');
+const Testimonial = require('../../src/models/Testimonial');
 
-jest.mock('../src/models/Testimonial');
-jest.mock('../src/middleware/auth', () => ({
+jest.mock('../../src/models/Testimonial');
+jest.mock('../../src/middleware/auth', () => ({
   authenticate: (req, res, next) => {
     req.admin = { id: 1, role: 'super_admin' };
     next();
