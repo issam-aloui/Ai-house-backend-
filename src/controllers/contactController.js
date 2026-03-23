@@ -1,5 +1,9 @@
 const ContactInquiry = require('../models/ContactInquiry');
 const nodemailer = require('nodemailer');
+const {
+  buildAdminNotificationTemplate,
+  buildResolvedConfirmationTemplate
+} = require('../../email_templates/contactEmailTemplates');
 
 // Submit contact form (public)
 exports.submitInquiry = async (req, res) => {
@@ -162,6 +166,8 @@ async function sendNotificationEmail(inquiry) {
   if (!process.env.SMTP_HOST) return;
 
   try {
+    const template = buildAdminNotificationTemplate(inquiry);
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT || 587,
@@ -175,17 +181,8 @@ async function sendNotificationEmail(inquiry) {
     await transporter.sendMail({
       from: `"AI House Website" <${process.env.SMTP_USER}>`,
       to: process.env.ADMIN_EMAIL || 'maison_ia@univ-blida.dz',
-      subject: `New Contact Inquiry: ${inquiry.subject}`,
-      html: `
-        <h2>New Contact Inquiry</h2>
-        <p><strong>Name:</strong> ${inquiry.name}</p>
-        <p><strong>Email:</strong> ${inquiry.email}</p>
-        <p><strong>Phone:</strong> ${inquiry.phone || 'N/A'}</p>
-        <p><strong>Type:</strong> ${inquiry.inquiry_type}</p>
-        <p><strong>Subject:</strong> ${inquiry.subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${inquiry.message}</p>
-      `
+      subject: template.subject,
+      html: template.html
     });
   } catch (error) {
     console.error('Failed to send notification email:', error);
@@ -197,6 +194,8 @@ async function sendResponseEmail(inquiry) {
   if (!process.env.SMTP_HOST) return;
 
   try {
+    const template = buildResolvedConfirmationTemplate(inquiry);
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT || 587,
@@ -210,16 +209,8 @@ async function sendResponseEmail(inquiry) {
     await transporter.sendMail({
       from: `"Blida 1 AI House" <${process.env.SMTP_USER}>`,
       to: inquiry.email,
-      subject: 'Re: Your Inquiry to AI House',
-      html: `
-        <h2>Thank you for contacting us</h2>
-        <p>Dear ${inquiry.name},</p>
-        <p>We have received your inquiry regarding "${inquiry.subject}" and have responded to your request.</p>
-        <p>If you have any further questions, please don't hesitate to contact us at maison_ia@univ-blida.dz</p>
-        <br>
-        <p>Best regards,</p>
-        <p><strong>Blida 1 AI House Team</strong></p>
-      `
+      subject: template.subject,
+      html: template.html
     });
   } catch (error) {
     console.error('Failed to send response email:', error);
