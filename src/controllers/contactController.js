@@ -1,9 +1,9 @@
-const ContactInquiry = require('../models/ContactInquiry');
-const nodemailer = require('nodemailer');
+const ContactInquiry = require("../models/ContactInquiry");
+const nodemailer = require("nodemailer");
 const {
   buildAdminNotificationTemplate,
-  buildResolvedConfirmationTemplate
-} = require('../../email_templates/contactEmailTemplates');
+  buildResolvedConfirmationTemplate,
+} = require("../../email_templates/contactEmailTemplates");
 
 // Submit contact form (public)
 exports.submitInquiry = async (req, res) => {
@@ -15,14 +15,14 @@ exports.submitInquiry = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Inquiry submitted successfully. We will contact you soon.',
-      data: inquiry
+      message: "Inquiry submitted successfully. We will contact you soon.",
+      data: inquiry,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error submitting inquiry',
-      error: error.message
+      message: "Error submitting inquiry",
+      error: error.message,
     });
   }
 };
@@ -37,7 +37,7 @@ exports.getAllInquiries = async (req, res) => {
       status,
       inquiry_type,
       limit: parseInt(limit),
-      offset
+      offset,
     });
 
     res.status(200).json({
@@ -45,14 +45,14 @@ exports.getAllInquiries = async (req, res) => {
       data: inquiries,
       pagination: {
         page: parseInt(page),
-        limit: parseInt(limit)
-      }
+        limit: parseInt(limit),
+      },
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error fetching inquiries',
-      error: error.message
+      message: "Error fetching inquiries",
+      error: error.message,
     });
   }
 };
@@ -64,13 +64,13 @@ exports.getInquiryStats = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: stats
+      data: stats,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error fetching statistics',
-      error: error.message
+      message: "Error fetching statistics",
+      error: error.message,
     });
   }
 };
@@ -84,19 +84,19 @@ exports.getInquiryById = async (req, res) => {
     if (!inquiry) {
       return res.status(404).json({
         success: false,
-        message: 'Inquiry not found'
+        message: "Inquiry not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      data: inquiry
+      data: inquiry,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error fetching inquiry',
-      error: error.message
+      message: "Error fetching inquiry",
+      error: error.message,
     });
   }
 };
@@ -107,30 +107,35 @@ exports.updateInquiryStatus = async (req, res) => {
     const { id } = req.params;
     const { status, admin_notes, assigned_to } = req.body;
 
-    const inquiry = await ContactInquiry.updateStatus(id, status, admin_notes, assigned_to);
+    const inquiry = await ContactInquiry.updateStatus(
+      id,
+      status,
+      admin_notes,
+      assigned_to,
+    );
 
     if (!inquiry) {
       return res.status(404).json({
         success: false,
-        message: 'Inquiry not found'
+        message: "Inquiry not found",
       });
     }
 
     // Send response email if status is resolved
-    if (status === 'resolved') {
+    if (status === "resolved") {
       await sendResponseEmail(inquiry);
     }
 
     res.status(200).json({
       success: true,
-      message: 'Inquiry status updated successfully',
-      data: inquiry
+      message: "Inquiry status updated successfully",
+      data: inquiry,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error updating inquiry status',
-      error: error.message
+      message: "Error updating inquiry status",
+      error: error.message,
     });
   }
 };
@@ -144,19 +149,19 @@ exports.deleteInquiry = async (req, res) => {
     if (!inquiry) {
       return res.status(404).json({
         success: false,
-        message: 'Inquiry not found'
+        message: "Inquiry not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      message: 'Inquiry deleted successfully'
+      message: "Inquiry deleted successfully",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Error deleting inquiry',
-      error: error.message
+      message: "Error deleting inquiry",
+      error: error.message,
     });
   }
 };
@@ -174,18 +179,18 @@ async function sendNotificationEmail(inquiry) {
       secure: false,
       auth: {
         user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      }
+        pass: process.env.SMTP_PASS,
+      },
     });
 
     await transporter.sendMail({
       from: `"AI House Website" <${process.env.SMTP_USER}>`,
-      to: process.env.ADMIN_EMAIL || 'maison_ia@univ-blida.dz',
+      to: process.env.ADMIN_EMAIL || "maison_ia@univ-blida.dz",
       subject: template.subject,
-      html: template.html
+      html: template.html,
     });
   } catch (error) {
-    console.error('Failed to send notification email:', error);
+    console.error("Failed to send notification email:", error);
   }
 }
 
@@ -202,17 +207,17 @@ async function sendResponseEmail(inquiry) {
       secure: false,
       auth: {
         user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      }
+        pass: process.env.SMTP_PASS,
+      },
     });
 
     await transporter.sendMail({
       from: `"Blida 1 AI House" <${process.env.SMTP_USER}>`,
       to: inquiry.email,
       subject: template.subject,
-      html: template.html
+      html: template.html,
     });
   } catch (error) {
-    console.error('Failed to send response email:', error);
+    console.error("Failed to send response email:", error);
   }
 }
