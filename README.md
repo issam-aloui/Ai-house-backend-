@@ -75,7 +75,10 @@ backend/
 │   │   └── admin.js
 │   ├── app.js                # Express app setup
 │   └── server.js             # Server entry point
-├── tests/                    # Test files
+├── tests/
+│   ├── unit_tests/           # Fast isolated tests (mocked dependencies)
+│   ├── integration_tests/    # Route/controller/model flow tests
+│   └── E2E_tests/            # End-to-end scenario tests
 ├── .env.example              # Environment template
 ├── package.json
 └── README.md
@@ -480,6 +483,10 @@ After database initialization:
 | `npm start` | Start production server |
 | `npm run dev` | Start development server (nodemon) |
 | `npm test` | Run tests |
+| `npm run test:unit` | Run unit tests only |
+| `npm run test:integration` | Run integration tests only |
+| `npm run test:e2e` | Run end-to-end tests only |
+| `npm run test:watch` | Run tests in watch mode |
 | `npm run db:init` | Initialize database tables |
 | `npm run db:seed` | Seed database with sample data |
 | `npm run lint` | Run ESLint |
@@ -505,9 +512,24 @@ Security measures implemented:
 
 ## 🧪 Testing
 
+The test suite is organized into dedicated folders to keep each test level clear and maintainable:
+
+- `tests/unit_tests/` - Unit tests for isolated logic and controller behavior using mocks
+- `tests/integration_tests/` - Integration tests for API flow across routes, middleware, controllers, and models
+- `tests/E2E_tests/` - End-to-end tests for complete real-world scenarios
+
 ```bash
 # Run all tests
 npm test
+
+# Run unit tests only
+npm run test:unit
+
+# Run integration tests only
+npm run test:integration
+
+# Run e2e tests only
+npm run test:e2e
 
 # Run tests in watch mode
 npm run test:watch
