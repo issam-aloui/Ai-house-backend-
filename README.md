@@ -30,15 +30,15 @@ This backend API powers the Blida 1 AI House website - the digital face of the u
 
 ## 🛠️ Tech Stack
 
-| Component | Technology |
-|-----------|------------|
-| Runtime | Node.js (>= 18) |
-| Framework | Express.js 4.x |
-| Database | PostgreSQL |
-| Authentication | JWT (jsonwebtoken) |
-| Validation | express-validator |
-| Security | Helmet, CORS, Rate Limiting |
-| Email | Nodemailer |
+| Component      | Technology                  |
+| -------------- | --------------------------- |
+| Runtime        | Node.js (>= 18)             |
+| Framework      | Express.js 4.x              |
+| Database       | PostgreSQL                  |
+| Authentication | JWT (jsonwebtoken)          |
+| Validation     | express-validator           |
+| Security       | Helmet, CORS, Rate Limiting |
+| Email          | Nodemailer                  |
 
 ## 📁 Project Structure
 
@@ -103,29 +103,30 @@ hotfix/*    → Emergency production fixes
 
 ### Branch Naming Convention
 
-| Branch Type | Pattern | Example |
-|-------------|---------|---------|
-| Feature | `feature/description` | `feature/event-registration` |
-| Bugfix | `fix/bug-description` | `fix/login-validation` |
-| Hotfix | `hotfix/critical-fix` | `hotfix/database-connection` |
-| Release | `release/v1.x.x` | `release/v1.1.0` |
+| Branch Type | Pattern               | Example                      |
+| ----------- | --------------------- | ---------------------------- |
+| Feature     | `feature/description` | `feature/event-registration` |
+| Bugfix      | `fix/bug-description` | `fix/login-validation`       |
+| Hotfix      | `hotfix/critical-fix` | `hotfix/database-connection` |
+| Release     | `release/v1.x.x`      | `release/v1.1.0`             |
 
 ### Commit Message Convention
 
 Use format: `<type>: <description>`
 
-| Type | Description | Example |
-|------|-------------|---------|
-| `feat` | New feature | `feat: add event registration endpoint` |
-| `fix` | Bug fix | `fix: correct JWT token expiration` |
-| `docs` | Documentation | `docs: update API endpoints list` |
-| `refactor` | Code refactoring | `refactor: simplify event controller` |
-| `test` | Tests | `test: add event controller tests` |
-| `chore` | Maintenance | `chore: update dependencies` |
+| Type       | Description      | Example                                 |
+| ---------- | ---------------- | --------------------------------------- |
+| `feat`     | New feature      | `feat: add event registration endpoint` |
+| `fix`      | Bug fix          | `fix: correct JWT token expiration`     |
+| `docs`     | Documentation    | `docs: update API endpoints list`       |
+| `refactor` | Code refactoring | `refactor: simplify event controller`   |
+| `test`     | Tests            | `test: add event controller tests`      |
+| `chore`    | Maintenance      | `chore: update dependencies`            |
 
 ### Development Workflow
 
 1. **Before starting work:**
+
    ```bash
    git checkout develop
    git pull origin develop
@@ -139,6 +140,7 @@ Use format: `<type>: <description>`
    - Commit frequently with clear messages
 
 3. **Before pushing:**
+
    ```bash
    npm run lint          # Check code style
    npm test              # Run tests
@@ -154,6 +156,7 @@ Use format: `<type>: <description>`
 ### Code Review Checklist
 
 **For Authors:**
+
 - [ ] Self-review completed
 - [ ] All tests passing
 - [ ] No console.logs left
@@ -161,6 +164,7 @@ Use format: `<type>: <description>`
 - [ ] API documentation updated (if needed)
 
 **For Reviewers:**
+
 - [ ] Code logic is correct
 - [ ] Security considerations checked
 - [ ] Performance impact assessed
@@ -171,17 +175,18 @@ Use format: `<type>: <description>`
 
 **Backend Completion Deadline: March 25, 2026**
 
-| Task | Assigned To | Description | Deadline | Status |
-|------|-------------|-------------|----------|--------|
-| **Events API & Media Upload** | Hocine | Complete events CRUD, add multer for image uploads, media gallery endpoints | March 22 | 🔵 Not Started |
-| **Statistics & Dashboard** | Walid | Statistics API completion, admin dashboard stats aggregation, charts data | March 22 | 🔵 Not Started |
+| Task                             | Assigned To  | Description                                                                   | Deadline | Status         |
+| -------------------------------- | ------------ | ----------------------------------------------------------------------------- | -------- | -------------- |
+| **Events API & Media Upload**    | Hocine       | Complete events CRUD, add multer for image uploads, media gallery endpoints   | March 22 | 🔵 Not Started |
+| **Statistics & Dashboard**       | Walid        | Statistics API completion, admin dashboard stats aggregation, charts data     | March 22 | 🔵 Not Started |
 | **Team, Testimonials & Contact** | Issam Eddine | Team members API, testimonials with approval workflow, contact inquiry system | March 22 | 🔵 Not Started |
-| **Testing & Documentation** | All | Unit tests, API documentation, integration tests | March 25 | 🔵 Not Started |
-| **Final Integration** | All | Merge all branches, final testing, bug fixes | March 25 | 🔵 Not Started |
+| **Testing & Documentation**      | All          | Unit tests, API documentation, integration tests                              | March 25 | 🔵 Not Started |
+| **Final Integration**            | All          | Merge all branches, final testing, bug fixes                                  | March 25 | 🔵 Not Started |
 
 ---
 
 #### Hocine - Events & Media Module
+
 - [ ] Fix any issues in `eventController.js`
 - [ ] Add image upload with multer (events images)
 - [ ] Create media upload endpoints (`POST /api/v1/events/:id/media`)
@@ -191,6 +196,7 @@ Use format: `<type>: <description>`
 - [ ] **Deadline: March 22, 2026**
 
 #### Walid - Statistics & Analytics Module
+
 - [ ] Complete `statisticController.js` endpoints
 - [ ] Add admin dashboard aggregation endpoint:
   - Total events count
@@ -202,6 +208,7 @@ Use format: `<type>: <description>`
 - [ ] **Deadline: March 22, 2026**
 
 #### Issam Eddine - Team, Testimonials & Contact Module
+
 - [ ] Verify `teamController.js` endpoints work correctly
 - [ ] Complete testimonial approval workflow
 - [ ] Add email notification for new inquiries
@@ -216,6 +223,7 @@ Use format: `<type>: <description>`
 **Standup Time:** 9:00 PM daily
 
 **Format:**
+
 1. What did you complete today?
 2. What are you working on tomorrow?
 3. Any blockers?
@@ -253,6 +261,7 @@ Each team member should:
 ### Database Changes
 
 When modifying database schema:
+
 1. Update `src/config/initDb.js`
 2. Test migration on local database
 3. Document changes in PR description
@@ -261,6 +270,7 @@ When modifying database schema:
 ### API Versioning
 
 We use `/api/v1/` prefix. When making breaking changes:
+
 - Discuss with team first
 - Plan migration strategy
 - Version bump to `/api/v2/`
@@ -296,20 +306,20 @@ The server will start at `http://localhost:5000`
 
 ## 🔐 Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NODE_ENV` | Environment (development/production) | `development` |
-| `PORT` | Server port | `5000` |
-| `DB_HOST` | PostgreSQL host | `localhost` |
-| `DB_PORT` | PostgreSQL port | `5432` |
-| `DB_NAME` | Database name | `ai_house` |
-| `DB_USER` | Database user | `postgres` |
-| `DB_PASSWORD` | Database password | - |
-| `JWT_SECRET` | JWT signing key | - |
-| `FRONTEND_URL` | Frontend CORS origin | `http://localhost:3000` |
-| `SMTP_HOST` | Email server host | - |
-| `SMTP_USER` | Email username | - |
-| `SMTP_PASS` | Email password | - |
+| Variable       | Description                          | Default                 |
+| -------------- | ------------------------------------ | ----------------------- |
+| `NODE_ENV`     | Environment (development/production) | `development`           |
+| `PORT`         | Server port                          | `5000`                  |
+| `DB_HOST`      | PostgreSQL host                      | `localhost`             |
+| `DB_PORT`      | PostgreSQL port                      | `5432`                  |
+| `DB_NAME`      | Database name                        | `ai_house`              |
+| `DB_USER`      | Database user                        | `postgres`              |
+| `DB_PASSWORD`  | Database password                    | -                       |
+| `JWT_SECRET`   | JWT signing key                      | -                       |
+| `FRONTEND_URL` | Frontend CORS origin                 | `http://localhost:3000` |
+| `SMTP_HOST`    | Email server host                    | -                       |
+| `SMTP_USER`    | Email username                       | -                       |
+| `SMTP_PASS`    | Email password                       | -                       |
 
 ## 🗄️ Database Setup
 
@@ -322,6 +332,7 @@ npm run db:init
 ```
 
 This will:
+
 - Create all required tables
 - Set up indexes for performance
 - Create a default super admin (username: `admin`, password: `admin123`)
@@ -339,6 +350,7 @@ Then run the initialization script.
 ### Database Schema
 
 **Tables:**
+
 - `admins` - Admin users for CMS
 - `events` - Workshops, seminars, datathons
 - `team_members` - Team profiles
@@ -351,6 +363,7 @@ Then run the initialization script.
 ## 📚 API Documentation
 
 ### Base URL
+
 ```
 /api/v1
 ```
@@ -358,79 +371,91 @@ Then run the initialization script.
 ### Public Endpoints
 
 #### Events
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/events` | List all events |
-| GET | `/events/featured` | Get featured events |
-| GET | `/events/upcoming` | Get upcoming events |
-| GET | `/events/:id` | Get event details |
+
+| Method | Endpoint           | Description         |
+| ------ | ------------------ | ------------------- |
+| GET    | `/events`          | List all events     |
+| GET    | `/events/featured` | Get featured events |
+| GET    | `/events/upcoming` | Get upcoming events |
+| GET    | `/events/:id`      | Get event details   |
 
 #### Statistics
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/statistics` | Get all statistics |
+
+| Method | Endpoint      | Description        |
+| ------ | ------------- | ------------------ |
+| GET    | `/statistics` | Get all statistics |
 
 #### Team
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/team` | List team members |
+
+| Method | Endpoint | Description       |
+| ------ | -------- | ----------------- |
+| GET    | `/team`  | List team members |
 
 #### Testimonials
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/testimonials` | List approved testimonials |
-| POST | `/testimonials` | Submit testimonial |
+
+| Method | Endpoint        | Description                |
+| ------ | --------------- | -------------------------- |
+| GET    | `/testimonials` | List approved testimonials |
+| POST   | `/testimonials` | Submit testimonial         |
 
 #### Contact
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/contact` | Submit inquiry |
+
+| Method | Endpoint   | Description    |
+| ------ | ---------- | -------------- |
+| POST   | `/contact` | Submit inquiry |
 
 ### Protected Endpoints (Admin)
 
 All protected endpoints require JWT token in header:
+
 ```
 Authorization: Bearer <token>
 ```
 
 #### Admin Authentication
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/admin/login` | Admin login |
-| GET | `/admin/profile` | Get profile |
+
+| Method | Endpoint         | Description |
+| ------ | ---------------- | ----------- |
+| POST   | `/admin/login`   | Admin login |
+| GET    | `/admin/profile` | Get profile |
 
 #### Event Management
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/events` | Create event |
-| PUT | `/events/:id` | Update event |
+
+| Method | Endpoint      | Description  |
+| ------ | ------------- | ------------ |
+| POST   | `/events`     | Create event |
+| PUT    | `/events/:id` | Update event |
 | DELETE | `/events/:id` | Delete event |
 
 #### Testimonial Management
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/testimonials/admin/all` | Get all (including pending) |
-| PUT | `/testimonials/:id/approve` | Approve testimonial |
+
+| Method | Endpoint                    | Description                 |
+| ------ | --------------------------- | --------------------------- |
+| GET    | `/testimonials/admin/all`   | Get all (including pending) |
+| PUT    | `/testimonials/:id/approve` | Approve testimonial         |
 
 #### Statistics Management
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/statistics` | Create statistic |
-| PUT | `/statistics/:id` | Update statistic |
-| PATCH | `/statistics/:id/value` | Quick value update |
-| DELETE | `/statistics/:id` | Delete statistic |
+
+| Method | Endpoint                | Description        |
+| ------ | ----------------------- | ------------------ |
+| POST   | `/statistics`           | Create statistic   |
+| PUT    | `/statistics/:id`       | Update statistic   |
+| PATCH  | `/statistics/:id/value` | Quick value update |
+| DELETE | `/statistics/:id`       | Delete statistic   |
 
 #### Contact Management
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/contact` | List inquiries |
-| GET | `/contact/stats` | Get inquiry stats |
-| PUT | `/contact/:id/status` | Update inquiry status |
-| DELETE | `/contact/:id` | Delete inquiry |
+
+| Method | Endpoint              | Description           |
+| ------ | --------------------- | --------------------- |
+| GET    | `/contact`            | List inquiries        |
+| GET    | `/contact/stats`      | Get inquiry stats     |
+| PUT    | `/contact/:id/status` | Update inquiry status |
+| DELETE | `/contact/:id`        | Delete inquiry        |
 
 ### Request/Response Examples
 
 #### Create Event (Admin)
+
 ```bash
 curl -X POST http://localhost:5000/api/v1/events \
   -H "Content-Type: application/json" \
@@ -447,6 +472,7 @@ curl -X POST http://localhost:5000/api/v1/events \
 ```
 
 #### Submit Contact Form
+
 ```bash
 curl -X POST http://localhost:5000/api/v1/contact \
   -H "Content-Type: application/json" \
@@ -470,7 +496,9 @@ The admin dashboard provides non-technical staff with tools to:
 - **Team Profiles**: Update team member information
 
 ### Default Admin Credentials
+
 After database initialization:
+
 - **Username**: `admin`
 - **Password**: `admin123`
 
@@ -478,19 +506,19 @@ After database initialization:
 
 ## 📝 Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start production server |
-| `npm run dev` | Start development server (nodemon) |
-| `npm test` | Run tests |
-| `npm run test:unit` | Run unit tests only |
-| `npm run test:integration` | Run integration tests only |
-| `npm run test:e2e` | Run end-to-end tests only |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run db:init` | Initialize database tables |
-| `npm run db:seed` | Seed database with sample data |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint errors |
+| Command                    | Description                        |
+| -------------------------- | ---------------------------------- |
+| `npm start`                | Start production server            |
+| `npm run dev`              | Start development server (nodemon) |
+| `npm test`                 | Run tests                          |
+| `npm run test:unit`        | Run unit tests only                |
+| `npm run test:integration` | Run integration tests only         |
+| `npm run test:e2e`         | Run end-to-end tests only          |
+| `npm run test:watch`       | Run tests in watch mode            |
+| `npm run db:init`          | Initialize database tables         |
+| `npm run db:seed`          | Seed database with sample data     |
+| `npm run lint`             | Run ESLint                         |
+| `npm run lint:fix`         | Fix ESLint errors                  |
 
 ## 🔒 Security
 
@@ -570,6 +598,7 @@ pm2 startup
 ## 📞 Support
 
 For technical support or questions:
+
 - Email: maison_ia@univ-blida.dz
 - Address: Aeronautics Pavilion 20, Blida 1 University
 
