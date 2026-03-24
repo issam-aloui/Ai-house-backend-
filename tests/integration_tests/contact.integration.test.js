@@ -158,6 +158,52 @@ describe("Contact API Integration", () => {
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
     expect(Array.isArray(response.body.data)).toBe(true);
+    expect(response.body.pagination).toEqual({ page: 1, limit: 10 });
+  });
+
+  it("GET /api/v1/contact returns 401 for invalid token", async () => {
+    const response = await request(app)
+      .get("/api/v1/contact")
+      .set("Authorization", "Bearer invalid-token");
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Invalid token.");
+  });
+
+  it("GET /api/v1/contact/stats returns stats with valid token", async () => {
+    const response = await request(app)
+      .get("/api/v1/contact/stats")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data).toEqual({
+      total: "1",
+      new_count: "1",
+      in_progress_count: "0",
+      resolved_count: "0",
+    });
+  });
+
+  it("GET /api/v1/contact/:id returns inquiry with valid token", async () => {
+    const response = await request(app)
+      .get("/api/v1/contact/1")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data.id).toBe(1);
+  });
+
+  it("GET /api/v1/contact/:id returns 404 when inquiry does not exist", async () => {
+    const response = await request(app)
+      .get("/api/v1/contact/999")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Inquiry not found");
   });
 
   it("PUT /api/v1/contact/:id/status resolves inquiry and sends response email", async () => {
@@ -170,5 +216,41 @@ describe("Contact API Integration", () => {
     expect(response.body.success).toBe(true);
     expect(response.body.data.status).toBe("resolved");
     expect(mockSendMail).toHaveBeenCalled();
+    expect(mockSendMail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: "alice@example.com",
+      }),
+    );
+  });
+
+  it("PUT /api/v1/contact/:id/status returns 404 when inquiry does not exist", async () => {
+    const response = await request(app)
+      .put("/api/v1/contact/999/status")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ status: "resolved" });
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Inquiry not found");
+  });
+
+  it("DELETE /api/v1/contact/:id deletes inquiry with valid token", async () => {
+    const response = await request(app)
+      .delete("/api/v1/contact/1")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.message).toBe("Inquiry deleted successfully");
+  });
+
+  it("DELETE /api/v1/contact/:id returns 404 when inquiry does not exist", async () => {
+    const response = await request(app)
+      .delete("/api/v1/contact/999")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Inquiry not found");
   });
 });

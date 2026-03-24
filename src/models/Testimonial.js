@@ -16,7 +16,7 @@ class Testimonial {
     return result.rows[0];
   }
 
-  static async findAll({ is_approved = true, is_featured, limit = 50 } = {}) {
+  static async findAll({ is_approved, is_featured, limit = 50 } = {}) {
     let sql = 'SELECT * FROM testimonials WHERE 1=1';
     const params = [];
     let paramIndex = 1;

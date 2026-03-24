@@ -26,8 +26,17 @@ describe("Testimonial API Integration", () => {
         id: 1,
         author_name: "Alice",
         content: "Great event",
+        rating: 5,
         is_approved: false,
         is_featured: false,
+      },
+      {
+        id: 2,
+        author_name: "Nora",
+        content: "Very useful workshop",
+        rating: 4,
+        is_approved: true,
+        is_featured: true,
       },
     ];
 
@@ -107,6 +116,15 @@ describe("Testimonial API Integration", () => {
     expect(response.body.data.is_approved).toBe(false);
   });
 
+  it("GET /api/v1/testimonials returns only approved testimonials", async () => {
+    const response = await request(app).get("/api/v1/testimonials");
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data).toHaveLength(1);
+    expect(response.body.data[0].author_name).toBe("Nora");
+  });
+
   it("PUT /api/v1/testimonials/:id/approve returns 401 without token", async () => {
     const response = await request(app)
       .put("/api/v1/testimonials/1/approve")
@@ -127,6 +145,28 @@ describe("Testimonial API Integration", () => {
     expect(response.body.data.is_approved).toBe(true);
   });
 
+  it("PUT /api/v1/testimonials/:id/approve returns 401 for invalid token", async () => {
+    const response = await request(app)
+      .put("/api/v1/testimonials/1/approve")
+      .set("Authorization", "Bearer invalid-token")
+      .send({ is_featured: true });
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Invalid token.");
+  });
+
+  it("PUT /api/v1/testimonials/:id/approve returns 404 for missing testimonial", async () => {
+    const response = await request(app)
+      .put("/api/v1/testimonials/999/approve")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ is_featured: true });
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Testimonial not found");
+  });
+
   it("GET /api/v1/testimonials/admin/all returns admin list with token", async () => {
     const response = await request(app)
       .get("/api/v1/testimonials/admin/all")
@@ -135,5 +175,25 @@ describe("Testimonial API Integration", () => {
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
     expect(Array.isArray(response.body.data)).toBe(true);
+    expect(response.body.data).toHaveLength(2);
+  });
+
+  it("DELETE /api/v1/testimonials/:id deletes existing testimonial", async () => {
+    const response = await request(app)
+      .delete("/api/v1/testimonials/1")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+  });
+
+  it("DELETE /api/v1/testimonials/:id returns 404 for missing testimonial", async () => {
+    const response = await request(app)
+      .delete("/api/v1/testimonials/999")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Testimonial not found");
   });
 });

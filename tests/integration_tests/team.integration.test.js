@@ -85,6 +85,9 @@ describe("Team API Integration", () => {
       if (normalized.startsWith("UPDATE team_members SET")) {
         const id = Number(params[params.length - 1]);
         const member = teamMembers.find((m) => m.id === id);
+        if (member && params.length > 0) {
+          member.role = params[0];
+        }
         return { rows: member ? [member] : [], rowCount: member ? 1 : 0 };
       }
 
@@ -134,6 +137,42 @@ describe("Team API Integration", () => {
     expect(response.body.data.full_name).toBe("New Member");
   });
 
+  it("POST /api/v1/team returns 401 for invalid token", async () => {
+    const response = await request(app)
+      .post("/api/v1/team")
+      .set("Authorization", "Bearer invalid-token")
+      .send({
+        full_name: "New Member",
+        title: "Engineer",
+      });
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Invalid token.");
+  });
+
+  it("PUT /api/v1/team/:id updates existing member", async () => {
+    const response = await request(app)
+      .put("/api/v1/team/1")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ role: "Lead Engineer" });
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data.role).toBe("Lead Engineer");
+  });
+
+  it("PUT /api/v1/team/:id returns 404 for missing member", async () => {
+    const response = await request(app)
+      .put("/api/v1/team/999")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ role: "Lead Engineer" });
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Team member not found");
+  });
+
   it("DELETE /api/v1/team/:id deletes existing member", async () => {
     const response = await request(app)
       .delete("/api/v1/team/1")
@@ -141,5 +180,15 @@ describe("Team API Integration", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
+  });
+
+  it("DELETE /api/v1/team/:id returns 404 for missing member", async () => {
+    const response = await request(app)
+      .delete("/api/v1/team/999")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Team member not found");
   });
 });
