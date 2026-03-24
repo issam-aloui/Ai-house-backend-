@@ -59,6 +59,8 @@ backend/
 │   │   ├── auth.js           # JWT authentication
 │   │   ├── errorHandler.js   # Error handling
 │   │   └── validation.js     # Request validation
+│   ├── email_templates/
+│   │   └── contactEmailTemplates.js
 │   ├── models/
 │   │   ├── Event.js
 │   │   ├── Testimonial.js

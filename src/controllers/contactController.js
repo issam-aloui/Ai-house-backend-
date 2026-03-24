@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 const {
   buildAdminNotificationTemplate,
   buildResolvedConfirmationTemplate,
-} = require("../../email_templates/contactEmailTemplates");
+} = require("../email_templates/contactEmailTemplates");
 
 // Submit contact form (public)
 exports.submitInquiry = async (req, res) => {
